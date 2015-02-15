@@ -43,7 +43,7 @@
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li>{{ link_to_route('accounts.index','Manage accounts') }}</li>
-                        <li><a href="balance">Account balance</a></li>
+                        <li>{{ link_to_route('balance','Account balance') }}</li>
                         <li>{{ link_to_route('accounts.create','Add an account') }}</li>
                     </ul>
                 </li>

@@ -17,7 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->increments('id');
             $table->string('name', 100);
             $table->enum('type', array('Income', 'Expense'));
-            $table->decimal('bt', 20, 2);
+            $table->decimal('bt', 20, 2)->nullable();
             $table->timestamps();
         });
     }

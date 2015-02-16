@@ -8,3 +8,14 @@ footer {
     margin: 50px 0;
 }
 
+.beatpicker-clear {
+    margin-top: 20px;
+}
+
+.beatpicker-input {
+    cursor: pointer !important;
+}
+
+.center-text th, .center-text tr td {
+    text-align: center;
+}

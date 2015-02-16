@@ -9,14 +9,14 @@
     <title>@yield('title')</title>
     <!-- The google font -->
     {{--<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>--}}
-    <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
+    {{--<link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>--}}
     <!-- Bootstrap core CSS -->
     {{ HTML::style('css/bootstrap.min.css') }}
     {{ HTML::style('css/font-awesome.css')}}
 
     <!-- Add custom CSS here -->
-    {{ HTML::style('css/blog-home.css') }}
-    {{ HTML::style('css/blog-post.css') }}
+    {{ HTML::style('css/style.css') }}
+    {{ HTML::style('css/BeatPicker.min.css') }}
 
 
 </head>
@@ -51,10 +51,10 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Transactions
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Add Deposit</a></li>
+                        <li>{{ link_to_route('transactions.create','Add Deposit') }}</li>
                         <li><a href="#">Add Expense</a></li>
                         <li><a href="#">Transfer</a></li>
-                        <li><a href="#">View Transactions</a></li>
+                        <li>{{ link_to_route('transactions.index','View Transactions') }}</li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -130,6 +130,8 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <!-- Make sure to add jQuery - download the most recent version at http://jquery.com/ -->
 {{ HTML::script('/js/jquery-2.1.3.min.js')}}
+{{ HTML::script('/js/BeatPicker.min.js')}}
+{{ HTML::script('/js/scripts.js')}}
 {{ HTML::script('/js/bootstrap.min.js')}}
 {{ HTML::script('/ckeditor/ckeditor.js')}}
 </body>

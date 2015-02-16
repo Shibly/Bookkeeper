@@ -37,13 +37,33 @@ class AccountController extends AdminController
         $input = Input::all();
         $validator = Validator::make($input, Account::$rules);
         if ($validator->passes()) {
+
+            /**
+             * Save data to the account table
+             */
             $account = new Account();
             $account->account_name = Input::get('account_name');
             $account->description = Input::get('description');
             $account->balance = Input::get('balance');
             $account->save();
 
-            return Redirect::route('accounts.index');
+            /**
+             * Save data to the transaction table
+             */
+
+            $transaction = new Transaction();
+            $transaction->type = 'Transfer';
+            $transaction->account = Input::get('account_name');
+            $transaction->amount = Input::get('balance');
+            $transaction->payer = 'System';
+            $transaction->date = date("Y/m/d");
+            $transaction->description = Input::get('description');
+            $transaction->cr = Input::get('balance');
+            $transaction->bal = Input::get('balance');
+            $transaction->save();
+
+
+            return Redirect::route('transactions.index');
         }
         return Redirect::back()->withErrors($validator);
     }

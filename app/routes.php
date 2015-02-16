@@ -30,6 +30,7 @@ Route::group(array('before' => 'auth'), function () {
     Route::resource('methods', 'PaymentMethodController');
     Route::resource('payees', 'PayeeController');
     Route::resource('payers', 'PayerController');
+    Route::resource('transactions', 'TransactionController');
     Route::get('expense', array('as' => 'expense', 'uses' => 'CategoryController@expense'));
     Route::get('income', array('as' => 'income', 'uses' => 'CategoryController@income'));
     Route::post('postCategory', array('as' => 'postCategory', 'uses' => 'CategoryController@postCategory'));

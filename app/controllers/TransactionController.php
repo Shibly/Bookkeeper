@@ -67,12 +67,14 @@ class TransactionController extends \BaseController
             $transaction->type = 'Income';
             $transaction->category = Input::get('category');
             $transaction->amount = Input::get('amount');
-            $transaction->cr = Input::get('account');
+            $transaction->cr = Input::get('amount');
             $transaction->payer = Input::get('payer');
+            $transaction->method = Input::get('method');
             $transaction->ref = Input::get('ref');
             $transaction->description = Input::get('description');
             $transaction->date = Input::get('date');
-            //$transaction->save();
+
+            $transaction->save();
 
             /**
              * Let's update account.

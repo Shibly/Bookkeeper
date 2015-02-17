@@ -52,7 +52,7 @@
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li>{{ link_to_route('transactions.create','Add Deposit') }}</li>
-                        <li><a href="#">Add Expense</a></li>
+                        <li>{{ link_to_route('expenses','Add Expense') }}</li>
                         <li><a href="#">Transfer</a></li>
                         <li>{{ link_to_route('transactions.index','View Transactions') }}</li>
                     </ul>

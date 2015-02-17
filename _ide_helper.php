@@ -1,7 +1,7 @@
 <?php
 /**
  * An helper file for Laravel 4, to provide autocomplete information to your IDE
- * Generated for Laravel 4.2.16 on 2014-12-24.
+ * Generated for Laravel 4.2.17 on 2015-02-17.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -1095,7 +1095,7 @@ namespace {
         }
         
         /**
-         * Set an input definition set to be used with this application
+         * Set an input definition set to be used with this application.
          *
          * @param \Symfony\Component\Console\InputDefinition $definition The input definition
          * @api 
@@ -1351,7 +1351,7 @@ namespace {
         }
         
         /**
-         * Tries to figure out the terminal dimensions based on the current environment
+         * Tries to figure out the terminal dimensions based on the current environment.
          *
          * @return array Array containing width and height
          * @static 
@@ -4266,6 +4266,20 @@ namespace {
         }
         
         /**
+         * Add a "where date" statement to the query.
+         *
+         * @param string $column
+         * @param string $operator
+         * @param int $value
+         * @param string $boolean
+         * @return \Illuminate\Database\Query\Builder|static 
+         * @static 
+         */
+        public static function whereDate($column, $operator, $value, $boolean = 'and'){
+            return \Illuminate\Database\Query\Builder::whereDate($column, $operator, $value, $boolean);
+        }
+        
+        /**
          * Add a "where day" statement to the query.
          *
          * @param string $column
@@ -5098,11 +5112,12 @@ namespace {
          *
          * @param string $path
          * @param string $contents
+         * @param bool $lock
          * @return int 
          * @static 
          */
-        public static function put($path, $contents){
-            return \Illuminate\Filesystem\Filesystem::put($path, $contents);
+        public static function put($path, $contents, $lock = false){
+            return \Illuminate\Filesystem\Filesystem::put($path, $contents, $lock);
         }
         
         /**
@@ -5528,6 +5543,7 @@ namespace {
          * Create a number input field.
          *
          * @param string $name
+         * @param string|null $value
          * @param array $options
          * @return string 
          * @static 
@@ -7140,7 +7156,7 @@ namespace {
          *
          * @return string The request method
          * @api 
-         * @see getRealMethod
+         * @see getRealMethod()
          * @static 
          */
         public static function getMethod(){
@@ -7152,7 +7168,7 @@ namespace {
          * Gets the "real" request method.
          *
          * @return string The request method
-         * @see getMethod
+         * @see getMethod()
          * @static 
          */
         public static function getRealMethod(){
@@ -7396,7 +7412,7 @@ namespace {
         }
         
         /**
-         * Gets a list of content types acceptable by the client browser
+         * Gets a list of content types acceptable by the client browser.
          *
          * @return array List of content types in preferable order
          * @api 
@@ -7758,7 +7774,7 @@ namespace {
          * Register an error_log handler.
          *
          * @param string $level
-         * @param integer $messageType
+         * @param int $messageType
          * @return void 
          * @static 
          */
@@ -8335,7 +8351,7 @@ namespace {
          * Resolve a queue connection instance.
          *
          * @param string $name
-         * @return \Barryvdh\Queue\AsyncQueue 
+         * @return \Illuminate\Queue\SyncQueue 
          * @static 
          */
         public static function connection($name = null){
@@ -8413,53 +8429,12 @@ namespace {
          *
          * @param string $job
          * @param mixed $data
-         * @param string|null $queue
-         * @return int 
+         * @param string $queue
+         * @return mixed 
          * @static 
          */
         public static function push($job, $data = '', $queue = null){
-            return \Barryvdh\Queue\AsyncQueue::push($job, $data, $queue);
-        }
-        
-        /**
-         * Store the job in the database.
-         * 
-         * Returns the id of the job.
-         *
-         * @param string $job
-         * @param mixed $data
-         * @param int $delay
-         * @return int 
-         * @static 
-         */
-        public static function storeJob($job, $data, $delay = 0){
-            return \Barryvdh\Queue\AsyncQueue::storeJob($job, $data, $delay);
-        }
-        
-        /**
-         * Make a Process for the Artisan command for the job id.
-         *
-         * @param int $jobId
-         * @param int $delay
-         * @return void 
-         * @static 
-         */
-        public static function startProcess($jobId, $delay = 0){
-            \Barryvdh\Queue\AsyncQueue::startProcess($jobId, $delay);
-        }
-        
-        /**
-         * Push a new job onto the queue after a delay.
-         *
-         * @param \DateTime|int $delay
-         * @param string $job
-         * @param mixed $data
-         * @param string|null $queue
-         * @return int 
-         * @static 
-         */
-        public static function later($delay, $job, $data = '', $queue = null){
-            return \Barryvdh\Queue\AsyncQueue::later($delay, $job, $data, $queue);
+            return \Illuminate\Queue\SyncQueue::push($job, $data, $queue);
         }
         
         /**
@@ -8472,8 +8447,21 @@ namespace {
          * @static 
          */
         public static function pushRaw($payload, $queue = null, $options = array()){
-            //Method inherited from \Illuminate\Queue\SyncQueue            
-            return \Barryvdh\Queue\AsyncQueue::pushRaw($payload, $queue, $options);
+            return \Illuminate\Queue\SyncQueue::pushRaw($payload, $queue, $options);
+        }
+        
+        /**
+         * Push a new job onto the queue after a delay.
+         *
+         * @param \DateTime|int $delay
+         * @param string $job
+         * @param mixed $data
+         * @param string $queue
+         * @return mixed 
+         * @static 
+         */
+        public static function later($delay, $job, $data = '', $queue = null){
+            return \Illuminate\Queue\SyncQueue::later($delay, $job, $data, $queue);
         }
         
         /**
@@ -8484,8 +8472,7 @@ namespace {
          * @static 
          */
         public static function pop($queue = null){
-            //Method inherited from \Illuminate\Queue\SyncQueue            
-            return \Barryvdh\Queue\AsyncQueue::pop($queue);
+            return \Illuminate\Queue\SyncQueue::pop($queue);
         }
         
         /**
@@ -8496,7 +8483,7 @@ namespace {
          */
         public static function marshal(){
             //Method inherited from \Illuminate\Queue\Queue            
-            return \Barryvdh\Queue\AsyncQueue::marshal();
+            return \Illuminate\Queue\SyncQueue::marshal();
         }
         
         /**
@@ -8510,7 +8497,7 @@ namespace {
          */
         public static function bulk($jobs, $data = '', $queue = null){
             //Method inherited from \Illuminate\Queue\Queue            
-            return \Barryvdh\Queue\AsyncQueue::bulk($jobs, $data, $queue);
+            return \Illuminate\Queue\SyncQueue::bulk($jobs, $data, $queue);
         }
         
         /**
@@ -8521,7 +8508,7 @@ namespace {
          */
         public static function getTime(){
             //Method inherited from \Illuminate\Queue\Queue            
-            return \Barryvdh\Queue\AsyncQueue::getTime();
+            return \Illuminate\Queue\SyncQueue::getTime();
         }
         
         /**
@@ -8533,7 +8520,7 @@ namespace {
          */
         public static function setContainer($container){
             //Method inherited from \Illuminate\Queue\Queue            
-            \Barryvdh\Queue\AsyncQueue::setContainer($container);
+            \Illuminate\Queue\SyncQueue::setContainer($container);
         }
         
         /**
@@ -8545,7 +8532,7 @@ namespace {
          */
         public static function setEncrypter($crypt){
             //Method inherited from \Illuminate\Queue\Queue            
-            \Barryvdh\Queue\AsyncQueue::setEncrypter($crypt);
+            \Illuminate\Queue\SyncQueue::setEncrypter($crypt);
         }
         
     }
@@ -9804,7 +9791,7 @@ namespace {
          *
          * @return string The request method
          * @api 
-         * @see getRealMethod
+         * @see getRealMethod()
          * @static 
          */
         public static function getMethod(){
@@ -9816,7 +9803,7 @@ namespace {
          * Gets the "real" request method.
          *
          * @return string The request method
-         * @see getMethod
+         * @see getMethod()
          * @static 
          */
         public static function getRealMethod(){
@@ -10060,7 +10047,7 @@ namespace {
         }
         
         /**
-         * Gets a list of content types acceptable by the client browser
+         * Gets a list of content types acceptable by the client browser.
          *
          * @return array List of content types in preferable order
          * @api 
@@ -10943,7 +10930,7 @@ namespace {
         }
         
         /**
-         * Sets the session ID
+         * Sets the session ID.
          *
          * @param string $id
          * @api 
@@ -12321,4 +12308,7 @@ namespace {
         }
         
     }
+
+
 }
+

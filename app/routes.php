@@ -25,6 +25,8 @@ Route::group(array('before' => 'auth'), function () {
     Route::get('admin', 'AdminController@index');
     Route::get('logout', 'AuthController@logout');
     Route::resource('posts', 'PostController');
+    Route::get('expenses', array('as' => 'expenses', 'uses' => 'ExpenseController@createExpenses'));
+    Route::post('storeExpense', array('as' => 'storeExpense', 'uses' => 'ExpenseController@storeExpense'));
     Route::get('balance', array('as' => 'balance', 'uses' => 'AccountController@balance'));
     Route::resource('accounts', 'AccountController');
     Route::resource('methods', 'PaymentMethodController');

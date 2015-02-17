@@ -1,40 +1,28 @@
 <?php
 
-class TransactionController extends \BaseController
+/**
+ * Created by PhpStorm.
+ * User: Shibly
+ * Date: 2/18/2015
+ * Time: 12:40 AM
+ */
+class ExpenseController extends AdminController
 {
-
-    /**
-     * Display a listing of the resource.
-     * GET /transaction
-     *
-     * @return Response
-     */
-    public function index()
+    public function createExpenses()
     {
-        $transactions = Transaction::orderBy('id', 'DESC')->paginate(10);
-        return View::make('transactions.index')->with('transactions', $transactions);
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     * GET /transaction/create
-     *
-     * @return Response
-     */
-    public function create()
-    {
         $accounts = array();
         foreach (Account::all() as $account) {
             $accounts[$account->account_name] = $account->account_name;
         }
 
         $payers = array();
-        foreach (Payer::all() as $payer) {
+        foreach (Payee::all() as $payer) {
             $payers[$payer->name] = $payer->name;
         }
 
         $incomeCategories = array();
-        foreach (Category::where('type', '=', 'Income')->get() as $income) {
+        foreach (Category::where('type', '=', 'Expense')->get() as $income) {
             $incomeCategories[$income->name] = $income->name;
         }
 
@@ -44,7 +32,7 @@ class TransactionController extends \BaseController
         }
 
 
-        return View::make('transactions.create')
+        return View::make('transactions.expense')
             ->with('accounts', $accounts)
             ->with('payers', $payers)
             ->with('incomes', $incomeCategories)
@@ -52,12 +40,9 @@ class TransactionController extends \BaseController
     }
 
     /**
-     * Store a newly created resource in storage.
-     * POST /transaction
-     *
-     * @return Response
+     * Store the expense to the database and balance account
      */
-    public function store()
+    public function storeExpense()
     {
         $input = Input::all();
         $validator = Validator::make($input, Transaction::$rules);
@@ -68,13 +53,13 @@ class TransactionController extends \BaseController
             $transaction->type = 'Income';
             $transaction->category = Input::get('category');
             $transaction->amount = Input::get('amount');
-            $transaction->cr = Input::get('amount');
+            $transaction->dr = Input::get('amount');
             $transaction->payer = Input::get('payer');
             $transaction->method = Input::get('method');
             $transaction->ref = Input::get('ref');
             $transaction->description = Input::get('description');
             $transaction->date = Input::get('date');
-            $transaction->bal = Input::get('amount') + $account->balance;
+            $transaction->bal = $account->balance - Input::get('amount');
 
             $transaction->save();
 
@@ -84,7 +69,7 @@ class TransactionController extends \BaseController
 
             $account = Account::where('account_name', '=', Input::get('account'))->first();
             //dd($account->account_name);
-            $account->balance += Input::get('amount');
+            $account->balance -= Input::get('amount');
             //dd($account);
             $account->save();
 
@@ -92,57 +77,4 @@ class TransactionController extends \BaseController
         }
         return Redirect::back()->withErrors($validator);
     }
-
-    /**
-     * Display the specified resource.
-     * GET /transaction/{id}
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * GET /transaction/{id}/edit
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     * PUT /transaction/{id}
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function update($id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * DELETE /transaction/{id}
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-
-
-
-
 }

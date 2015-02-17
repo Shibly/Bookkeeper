@@ -37,7 +37,7 @@
                 </tr>
                 </thead>
                 <tbody class="center-text">
-                @foreach($transactions as $transaction )
+                @foreach($transactions as $transaction)
                     <tr>
 
                         <td>{{ $transaction->date }}</td>
@@ -58,6 +58,9 @@
                 @endforeach
                 </tbody>
             </table>
+        </div>
+        <div class="col-md-12">
+            {{ $transactions->links() }}
         </div>
     @else
         <div class="alert alert-info col-md-4" style="margin-top: 15px;">

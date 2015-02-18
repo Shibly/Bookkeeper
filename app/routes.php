@@ -22,6 +22,8 @@ Route::post('login', 'AuthController@postLogin');
 
 Route::group(array('before' => 'auth'), function () {
 
+    Route::get('editUser', 'AuthController@editUser');
+    Route::post('updateUser/{id}', 'AuthController@updateUser')->where('id', '[1-9][0-1]*');
     Route::get('admin', 'AdminController@index');
     Route::get('logout', 'AuthController@logout');
     Route::resource('posts', 'PostController');

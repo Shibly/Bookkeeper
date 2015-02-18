@@ -66,15 +66,29 @@ class AuthController extends BaseController
      */
     public function editUser()
     {
-
+        $user = User::find(Auth::user()->id);
+        return View::make('admin.edit')->with('user', $user);
     }
 
 
     /**
      * @return update the current users profile
      */
-    public function updateUser()
+    public function updateUser($id)
     {
+        $input = Input::all();
+        $v = Validator::make($input, User::$rules);
+        if ($v->passes()) {
+            $user = User::find($id);
+            $user->username = Input::get('username');
+            $user->fullname = Input::get('fullname');
+            $user->phonenumber = Input::get('phonenumber');
+            $user->email = Input::get('email');
+            $user->password = Hash::make(Input::get('password'));
+            $user->save();
+            return Redirect::to('admin');
+        }
+        return Redirect::back()->withErrors($v);
     }
 
     public function logout()

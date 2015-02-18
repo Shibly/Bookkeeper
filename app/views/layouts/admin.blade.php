@@ -91,7 +91,7 @@
                        aria-expanded="false"> Welcome {{ Auth::user()->username }} !
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Edit Profile</a></li>
+                        <li>{{ link_to('editUser','Edit Profile') }}</li>
                         <li>{{ HTML::link('logout', 'Logout') }}</li>
                     </ul>
                 </li>

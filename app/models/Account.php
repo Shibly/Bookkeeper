@@ -7,7 +7,7 @@ class Account extends \Eloquent
     public static $rules = array(
         'account_name' => 'required',
         'description' => 'required',
-        'balance' => 'required|numeric'
+        'balance' => 'required|numeric',
     );
 
 

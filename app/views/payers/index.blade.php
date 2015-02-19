@@ -3,7 +3,7 @@
 
 @extends('layouts.admin')
 @section('title')
-    Payment Methods
+    Payer Name
 @stop
 @section('content')
     <div class="col-md-6">
@@ -17,7 +17,7 @@
         @endif
 
         <div class="control-group">
-            {{ Form::label('name','Payment method name:') }}
+            {{ Form::label('name','Payer Name:') }}
             {{Form::text('name','',array('class'=>'form-control','placeholder'=>'Name'))}}
         </div>
         <br/>

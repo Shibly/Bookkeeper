@@ -8,7 +8,8 @@ class Transaction extends \Eloquent
     public static $rules = array(
         'date' => 'required',
         'amount' => 'required|numeric',
-        'description' => 'required'
+        'description' => 'required',
+        'method' => 'required'
     );
 
 }

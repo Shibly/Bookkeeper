@@ -35,8 +35,8 @@
         <br/>
 
         <div class="control-group">
-            {{ Form::label('payer','Payer:') }}
-            {{Form::select('payer',$payers)}}
+            {{ Form::label('payee','Payee:') }}
+            {{Form::select('Payee',$payers)}}
         </div>
         <br/>
 
@@ -63,7 +63,7 @@
             {{ Form::text('description','',array('class'=>'form-control','placeholder'=>'description')) }}
         </div>
         <br/>
-        {{ Form::submit('Create Deposit',array('class'=>'btn btn-success')) }}
+        {{ Form::submit('Add Deposit',array('class'=>'btn btn-success')) }}
         {{ Form::close() }}
     </div>
 @stop

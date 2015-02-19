@@ -112,18 +112,9 @@
 
 
     </div>
-
-    <hr>
-
-    <footer>
-        <div class="row">
-            <div class="col-lg-12">
-                <p>Copyright &copy; WTD 2015 &middot; Facebook &middot; Twitter &middot; Google+</p>
-            </div>
-        </div>
-    </footer>
-
 </div>
+@include('partials.footer')
+
 <!-- /.container -->
 
 <!-- Bootstrap core JavaScript -->
@@ -131,6 +122,7 @@
 <!-- Make sure to add jQuery - download the most recent version at http://jquery.com/ -->
 {{ HTML::script('/js/jquery-2.1.3.min.js')}}
 {{ HTML::script('/js/BeatPicker.min.js')}}
+{{ HTML::script('/js/Chart.min.js') }}
 {{ HTML::script('/js/scripts.js')}}
 {{ HTML::script('/js/bootstrap.min.js')}}
 {{ HTML::script('/ckeditor/ckeditor.js')}}

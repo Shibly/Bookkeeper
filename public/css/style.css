@@ -19,3 +19,25 @@ footer {
 .center-text th, .center-text tr td {
     text-align: center;
 }
+
+.expense {
+    padding: 25px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.bottom {
+    background-color: #474747;
+    width: 100%;
+}
+
+.bottom .container h3 {
+    color: #999;
+}
+
+.bottom .container p {
+    color: #666;
+}
+
+.top-buffer { margin-top:20px !important; }

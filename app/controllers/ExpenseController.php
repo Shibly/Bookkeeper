@@ -17,7 +17,7 @@ class ExpenseController extends AdminController
         }
 
         $payers = array();
-        foreach (Payee::all() as $payer) {
+        foreach (Payer::all() as $payer) {
             $payers[$payer->name] = $payer->name;
         }
 
@@ -50,7 +50,7 @@ class ExpenseController extends AdminController
             $transaction = new Transaction();
             $account = Account::where('account_name', '=', Input::get('account'))->first();
             $transaction->account = Input::get('account');
-            $transaction->type = 'Income';
+            $transaction->type = 'Expense';
             $transaction->category = Input::get('category');
             $transaction->amount = Input::get('amount');
             $transaction->dr = Input::get('amount');

@@ -29,7 +29,7 @@ class TransactionController extends \BaseController
         }
 
         $payers = array();
-        foreach (Payer::all() as $payer) {
+        foreach (Payee::all() as $payer) {
             $payers[$payer->name] = $payer->name;
         }
 

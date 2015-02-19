@@ -17,7 +17,7 @@
         @endif
 
         <div class="control-group">
-            {{ Form::label('name','Payment method name:') }}
+            {{ Form::label('name','Payee name:') }}
             {{Form::text('name','',array('class'=>'form-control','placeholder'=>'Name'))}}
         </div>
         <br/>

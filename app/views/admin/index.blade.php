@@ -1,93 +1,125 @@
 @extends('layouts.admin')
 
-@section('Admin Area')
+@section('title')
+    Admin Area
 @stop
 @section('content')
-    <div class="row alert alert-info">
+    <div class="row">
         <div class="col-lg-12">
-            <h2 class="text-center">Welcome {{ ucwords(Auth::user()->username) }}</h2>
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h2 class="box-title">Welcome {{ ucwords(Auth::user()->username) }}</h2>
+                </div>
+                <div class="box-body"></div>
+            </div>
         </div>
+    </div>
     </div>
     <br/>
     <div class="row">
-        <div class="col-lg-3">
-            <div class="expense" style="background-color: #337ab7;">
-                <div class="row">
-                    <div class="col-xs-4">
-                        <i class="fa fa-plus fa-3x"></i>
-                    </div>
-                    <div class="col-xs-8 text-right">
-                        <span> Income Today </span>
-                        <h4 class="font-bold text-white"> 0.00</h4>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h3>
+                        {{ $income_today }} BDT
+                    </h3>
 
-        <div class="col-lg-3">
-            <div class="expense" style="background-color: #5cb85c;">
-                <div class="row">
-                    <div class="col-xs-4">
-                        <i class="fa fa-minus fa-3x"></i>
-                    </div>
-                    <div class="col-xs-8 text-right">
-                        <span> Expense Today </span>
-                        <h4 class="font-bold text-white"> 0.00</h4>
-                    </div>
+                    <p>
+                        Income Today
+                    </p>
                 </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    More info <i class="fa fa-arrow-circle-right"></i>
+                </a>
             </div>
         </div>
-        <div class="col-lg-3">
-            <div class="expense" style="background-color: #5bc0de;">
-                <div class="row">
-                    <div class="col-xs-4">
-                        <i class="fa fa-plus fa-3x"></i>
-                    </div>
-                    <div class="col-xs-8 text-right">
-                        <span> Income This Month </span>
-                        <h4 class="font-bold text-white"> 27,000.00</h4>
-                    </div>
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3>
+                        {{ $expense_today }} BDT
+                    </h3>
+
+                    <p>
+                        Expense Today
+                    </p>
                 </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    More info <i class="fa fa-arrow-circle-right"></i>
+                </a>
             </div>
         </div>
-        <div class="col-lg-3">
-            <div class="expense" style="background-color: #d9534f;">
-                <div class="row">
-                    <div class="col-xs-4">
-                        <i class="fa fa-minus fa-3x"></i>
-                    </div>
-                    <div class="col-xs-8 text-right">
-                        <span> Expense This Month </span>
-                        <h4 class="font-bold text-white"> 2,000.00</h4>
-                    </div>
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <h3>
+                        {{ $monthly_income }} BDT
+                    </h3>
+
+                    <p>
+                        Income This Month
+                    </p>
                 </div>
+                <div class="icon">
+                    <i class="ion ion-person-add"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    More info <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-red">
+                <div class="inner">
+                    <h3>
+                        {{ $monthly_expense }} BDT
+                    </h3>
+
+                    <p>
+                        Expense This Month
+                    </p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    More info <i class="fa fa-arrow-circle-right"></i>
+                </a>
             </div>
         </div>
     </div>
     <div class="row top-buffer">
 
-        <div class="widget-1 col-md-6">
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Financial Balances</h3>
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Financial Accounts And Balances</h3>
+
 
                 </div>
-                <div class="panel-body">
+                <div class="box-body">
                     <table class="table table-bordered">
                         <tbody>
                         <tr>
                             <th>Account</th>
                             <th class="text-right">Balance</th>
                         </tr>
-                        <tr>
-                            <td>Savings account</td>
-                            <td class="text-right"><span> 16,000.00</span></td>
-                        </tr>
-                        <tr>
-                            <td>Petty Cash</td>
-                            <td class="text-right"><span> 9,000.00</span></td>
-                        </tr>
-
+                        @foreach($accounts as $account)
+                            <tr>
+                                <td>{{ $account->account_name }}</td>
+                                <td class="text-right"><span> {{ $account->balance }}</span></td>
+                            </tr>
+                        @endforeach
 
                         </tbody>
                     </table>
@@ -97,11 +129,11 @@
         <!-- Widget-1 end-->
 
         <div class="col-md-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Income Vs Expense (February 2015)</h3>
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Income Vs Expense (February 2015)</h3>
                 </div>
-                <div class="panel-body">
+                <div class="box-body">
                     <div id="income-vs-expense">
                         <div id="canvas-holder">
                             <canvas id="chart-area"/>
@@ -113,6 +145,25 @@
         </div>
         <!-- Widget-2 end-->
     </div>
+    <script>
+        var doughnutData = [
+            {
+                value: {{json_encode($monthly_expense)}},
+                color: "#c91b26",
+                highlight: "#FF5A5E",
+                label: "Expense"
+            },
+            {
+                value: {{json_encode($monthly_income)}},
+                color: "#5bc0de",
+                highlight: "#FFC870",
+                label: "Income"
+            },
+        ];
 
-
+        window.onload = function () {
+            var ctx = document.getElementById("chart-area").getContext("2d");
+            window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive: true});
+        };
+    </script>
 @stop

@@ -28,6 +28,8 @@ class TransactionController extends \BaseController
             $accounts[$account->account_name] = $account->account_name;
         }
 
+        //dd($accounts);
+
         $payers = array();
         foreach (Payee::all() as $payer) {
             $payers[$payer->name] = $payer->name;
@@ -75,19 +77,15 @@ class TransactionController extends \BaseController
             $transaction->description = Input::get('description');
             $transaction->date = Input::get('date');
             $transaction->bal = Input::get('amount') + $account->balance;
-
             $transaction->save();
-
             /**
              * Let's update account.
              */
-
             $account = Account::where('account_name', '=', Input::get('account'))->first();
             //dd($account->account_name);
             $account->balance += Input::get('amount');
             //dd($account);
             $account->save();
-
             return Redirect::route('transactions.index');
         }
         return Redirect::back()->withErrors($validator);
@@ -140,9 +138,6 @@ class TransactionController extends \BaseController
     {
         //
     }
-
-
-
 
 
 }

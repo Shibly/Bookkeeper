@@ -11,13 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return View::make('hello');
-});
+//Route::get('/', function () {
+//    return View::make('hello');
+//});
 
 Route::get('register', 'AuthController@getRegister');
 Route::post('register', 'AuthController@postRegister');
-Route::get('login', 'AuthController@getLogin');
+Route::get('/', 'AuthController@getLogin');
 Route::post('login', 'AuthController@postLogin');
 
 Route::group(array('before' => 'auth'), function () {

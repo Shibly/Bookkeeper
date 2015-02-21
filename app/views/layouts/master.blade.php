@@ -1,24 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     @include('partials/header')
 
-  </head>
+</head>
 
-  <body>
+<body>
 
-    @include('partials/nav')
 
-    <div class="container">
+<div class="container">
     <div class="row">
         <div class="col-lg-8">
-        @yield('content')
+            @yield('content')
         </div>
-        
-      @include('partials/sidebar')
-      
-      @include('partials/footer')
 
-    @include('partials/scripts')
-  </body>
+    </div>
+</div>
+</body>
 </html>

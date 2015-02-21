@@ -5,17 +5,17 @@
         <div class="col-md-4">
             <h3><span class="glyphicon glyphicon-barcode"></span> Book-Keeper</h3>
 
-            <p> Created with <span class="glyphicon glyphicon-heart"></span> Laravel</p>
+            <p> Build with <span class="glyphicon glyphicon-heart"></span> Laravel</p>
         </div>
         <div class="col-md-4">
-            <h3><span class="glyphicon glyphicon-star"></span> Footer section 2</h3>
+            <h3><span class="glyphicon glyphicon-star"></span> UI</h3>
 
-            <p>Content for the second footer section.</p>
+            <p>Made with bootstrap.</p>
         </div>
         <div class="col-md-4">
-            <h3><span class="glyphicon glyphicon-music"></span> Footer section 3</h3>
+            <h3><span class="glyphicon glyphicon-music"></span> Developed By</h3>
 
-            <p>Content for the third footer section.</p>
+            <p><a href="http://wordpressthemesdeveloper.com" target="_blank">WPD</a></p>
         </div>
     </div>
 </div>

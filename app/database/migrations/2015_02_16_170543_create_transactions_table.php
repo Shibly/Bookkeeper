@@ -20,8 +20,8 @@ class CreateTransactionsTable extends Migration
             $table->enum('type', array('Income', 'Expense', 'Transfer'));
             $table->string('category', 200)->nullable();
             $table->decimal('amount', 18, 2);
-            $table->string('payer', 200);
-            $table->string('payee', 200);
+            $table->string('payer', 200)->nullable();
+            $table->string('payee', 200)->nullable();
             $table->string('method', 200)->nullable();
             $table->string('ref', 200)->nullable();
             $table->enum('status', array('Cleared', 'Uncleared', 'Reconciled', 'Void'));

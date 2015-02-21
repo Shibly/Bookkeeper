@@ -1,14 +1,18 @@
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
 
-    <title>Tutsbyus</title>
+<title>@yield('title')</title>
+<!-- The google font -->
+{{--<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>--}}
+{{--<link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>--}}
+<!-- Bootstrap core CSS -->
+{{ HTML::style('css/bootstrap.min.css') }}
+{{ HTML::style('css/font-awesome.css')}}
 
-    <!-- Bootstrap core CSS -->
-    {{ HTML::style('//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css') }}
-    {{ HTML::style('//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css')}}
-    
-    <!-- Add custom CSS here -->
-    {{ HTML::style('css/blog-home.css') }}
-    {{ HTML::style('css/blog-post.css') }}
+<!-- Add custom CSS here -->
+{{ HTML::style('css/style.css') }}
+{{ HTML::style('css/ionicons.min.css')}}
+{{ HTML::style('css/BeatPicker.min.css') }}
+{{ HTML::style('css/select2.min.css') }}

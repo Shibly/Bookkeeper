@@ -53,11 +53,11 @@ class AuthController extends BaseController
 
             } else {
 
-                return Redirect::to('login');
+                return Redirect::to('/')->withErrors('Your username password combo is incorrect');
             }
         }
 
-        return Redirect::to('login')->withErrors($v);
+        return Redirect::to('/')->withErrors($v);
 
     }
 

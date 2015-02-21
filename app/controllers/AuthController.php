@@ -23,7 +23,7 @@ class AuthController extends BaseController
             $user->password = Hash::make(Input::get('password'));
             $user->save();
 
-            return Redirect::to('login');
+            return Redirect::to('/');
 
         }
 

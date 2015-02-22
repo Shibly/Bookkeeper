@@ -18,9 +18,18 @@
 Route::get('register', 'AuthController@getRegister');
 Route::post('register', 'AuthController@postRegister');
 Route::get('/', 'AuthController@getLogin');
+Route::get('login', 'AuthController@getLogin');
 Route::post('login', 'AuthController@postLogin');
 
 Route::group(array('before' => 'auth'), function () {
+
+
+    /**
+     * Reports routing
+     */
+
+    Route::get('report/statement', 'ReportController@getAccountStatement');
+    Route::post('postAccountStatement',array('as'=>'postStatement','uses'=>'ReportController@postAccountStatement'));
 
     Route::get('editUser', 'AuthController@editUser');
     Route::post('updateUser/{id}', 'AuthController@updateUser')->where('id', '[1-9][0-1]*');

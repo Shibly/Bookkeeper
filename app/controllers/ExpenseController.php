@@ -32,11 +32,14 @@ class ExpenseController extends AdminController
         }
 
 
+        $expenses = Transaction::where('type', '=', 'Expense')->paginate(10);
+
         return View::make('transactions.expense')
             ->with('accounts', $accounts)
             ->with('payers', $payers)
             ->with('incomes', $incomeCategories)
-            ->with('methods', $methods);
+            ->with('methods', $methods)
+            ->with('expenses', $expenses);
     }
 
     /**

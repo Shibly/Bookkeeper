@@ -24,7 +24,7 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Reports
                 <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Account Statement</a></li>
+                <li>{{ link_to('report/statement','Account Statement') }}</li>
                 <li><a href="#">Reports By Date</a></li>
                 <li><a href="#">Income Reports</a></li>
                 <li><a href="#">Expense Reports</a></li>

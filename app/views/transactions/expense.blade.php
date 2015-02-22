@@ -72,4 +72,30 @@
             </div>
         </div>
     </div>
+    <div class="col-md-6">
+        <div class="box box-info">
+            <div class="box-header">
+                <h3 class="box-title">Previous Expenses</h3>
+            </div>
+            <div class="box-body">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th class="text-right">Amount</th>
+                    </tr>
+                    @foreach($expenses as $expense)
+                        <tr>
+                            <td>{{ $expense->date }}</td>
+                            <td>{{ $expense->description }}</td>
+                            <td class="text-right"><span> {{ $expense->amount }}</span></td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+                {{ $expenses->links() }}
+            </div>
+        </div>
+    </div>
 @stop

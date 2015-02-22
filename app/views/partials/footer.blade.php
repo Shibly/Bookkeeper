@@ -15,7 +15,7 @@
         <div class="col-md-4">
             <h3><span class="glyphicon glyphicon-music"></span> Developed By</h3>
 
-            <p><a href="http://wordpressthemesdeveloper.com" target="_blank">WPD</a></p>
+            <p><a href="http://wordpressthemesdeveloper.com" target="_blank">WTD</a></p>
         </div>
     </div>
 </div>

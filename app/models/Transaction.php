@@ -9,7 +9,8 @@ class Transaction extends \Eloquent
         'date' => 'required',
         'amount' => 'required|numeric',
         'description' => 'required',
-        'method' => 'required'
+        'method' => 'required',
+        'account' => 'required'
     );
 
 }

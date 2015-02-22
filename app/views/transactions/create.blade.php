@@ -40,7 +40,7 @@
 
                 <div class="control-group">
                     {{ Form::label('payee','Payee:') }}
-                    {{Form::select('Payee',array('default' => 'Please Select') + $payers, 'default')}}
+                    {{Form::select('payee',array('default' => 'Please Select') + $payees, 'default')}}
                 </div>
                 <br/>
 
@@ -69,6 +69,35 @@
                 <br/>
                 {{ Form::submit('Add Deposit',array('class'=>'btn btn-success')) }}
                 {{ Form::close() }}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-6">
+        <div class="box box-info">
+            <div class="box-header">
+                <h3 class="box-title">Previous Deposits</h3>
+            </div>
+            <div class="box-body">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th class="text-right">Amount</th>
+                    </tr>
+                    @foreach($deposits as $deposit)
+                        <tr>
+                            <td>{{ $deposit->date }}</td>
+                            <td>{{ $deposit->description }}</td>
+                            <td class="text-right"><span> {{ $deposit->amount }}</span></td>
+                        </tr>
+                    @endforeach
+
+                    </tbody>
+                </table>
+                {{ $deposits->links() }}
             </div>
         </div>
     </div>

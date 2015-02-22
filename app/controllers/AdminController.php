@@ -5,10 +5,13 @@ class AdminController extends BaseController
 
     public function index()
     {
-        $accounts = Account::all();
+        $accounts = Account::paginate(5);
 
-        $expenses = Transaction::where('type', '=', 'Expense')->where('date', '=', date('Y-m-d'))->get();
-        $incomes = Transaction::where('type', '=', 'Income')->where('date', '=', date('Y-m-d'))->get();
+        $currentDate = new DateTime();
+        $date = $currentDate->format('Y-m-d');
+        $expenses = Transaction::where('type', '=', 'Expense')->where('date', '=', $date)->get();
+        $incomes = Transaction::where('type', '=', 'Income')->where('date', '=', $date)->get();
+
 
         $incomes_this_month = Transaction::where(DB::raw('MONTH(created_at)'), '=', date('n'))
             ->where('type', '=', 'Income')->get();
@@ -33,11 +36,13 @@ class AdminController extends BaseController
             $expense_today += $expense->amount;
         }
 
+
         foreach ($incomes as $income) {
             $income_today += $income->amount;
         }
 
-       // dd($expenses);
+
+        // dd($expenses);
         return View::make('admin.index')
             ->with('accounts', $accounts)
             ->with('expense_today', $expense_today)

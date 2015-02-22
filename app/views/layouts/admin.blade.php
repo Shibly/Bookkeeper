@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
     @include('partials.header')
-
-
 </head>
 
 <body>

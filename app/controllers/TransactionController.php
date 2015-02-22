@@ -30,9 +30,11 @@ class TransactionController extends \BaseController
 
         //dd($accounts);
 
-        $payers = array();
-        foreach (Payee::all() as $payer) {
-            $payers[$payer->name] = $payer->name;
+        $deposits = Transaction::where('type', '=', 'Income')->paginate(10);
+
+        $payees = array();
+        foreach (Payee::all() as $payee) {
+            $payees[$payee->name] = $payee->name;
         }
 
         $incomeCategories = array();
@@ -48,9 +50,10 @@ class TransactionController extends \BaseController
 
         return View::make('transactions.create')
             ->with('accounts', $accounts)
-            ->with('payers', $payers)
+            ->with('payees', $payees)
             ->with('incomes', $incomeCategories)
-            ->with('methods', $methods);
+            ->with('methods', $methods)
+            ->with('deposits', $deposits);
     }
 
     /**
@@ -62,6 +65,7 @@ class TransactionController extends \BaseController
     public function store()
     {
         $input = Input::all();
+        //dd(Input::get('payee'));
         $validator = Validator::make($input, Transaction::$rules);
         if ($validator->passes()) {
             $transaction = new Transaction();
@@ -71,7 +75,7 @@ class TransactionController extends \BaseController
             $transaction->category = Input::get('category');
             $transaction->amount = Input::get('amount');
             $transaction->cr = Input::get('amount');
-            $transaction->payer = Input::get('payer');
+            $transaction->payee = Input::get('payee');
             $transaction->method = Input::get('method');
             $transaction->ref = Input::get('ref');
             $transaction->description = Input::get('description');
@@ -81,7 +85,7 @@ class TransactionController extends \BaseController
             /**
              * Let's update account.
              */
-            $account = Account::where('account_name', '=', Input::get('account'))->first();
+
             //dd($account->account_name);
             $account->balance += Input::get('amount');
             //dd($account);

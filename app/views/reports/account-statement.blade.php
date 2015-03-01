@@ -15,7 +15,7 @@
                     {{ Form::open(array('route'=>'postStatement')) }}
                     <div class="control-group">
                         {{ Form::label('name','Account') }}
-                        {{Form::select('account',array('default' => 'Please Select') + $accounts, 'default')}}
+                        {{Form::select('account_name',array('default' => 'Please Select') + $accounts, 'default')}}
                     </div>
                     <br/>
 
@@ -32,8 +32,8 @@
                     <br/>
 
                     <div class="control-group">
-                        {{ Form::label('name','Type') }}
-                        {{Form::select('account',array('debit' => 'Debit','credit'=>'Credit') , 'debit')}}
+                        {{ Form::label('type','Type') }}
+                        {{Form::select('account-type',array('all-transactions'=>'All Transactions', 'debit' => 'Debit','credit'=>'Credit') , 'all-transactions')}}
                     </div>
                     <br/>
                     {{ Form::submit('View Statement',array('class'=>'btn btn-success')) }}

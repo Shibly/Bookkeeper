@@ -123,6 +123,7 @@ return array(
         'Illuminate\Workbench\WorkbenchServiceProvider',
         'Way\Generators\GeneratorsServiceProvider',
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
+        'Keeper\Providers\RepositoryServiceProvider'
 
     ),
 

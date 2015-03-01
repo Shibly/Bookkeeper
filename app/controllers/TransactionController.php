@@ -1,6 +1,7 @@
 <?php
+use Illuminate\Support\Facades\Input;
 
-class TransactionController extends \BaseController
+class TransactionController extends BaseController
 {
 
     /**

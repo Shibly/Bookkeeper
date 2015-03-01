@@ -16,7 +16,18 @@ class ReportController extends AdminController
 
     public function postAccountStatement()
     {
-        dd('You call me bitch');
+
+        //dd(Input::get('account-type'));
+        if (Input::get('account-type') == 'all-transactions') {
+            $results = Transaction::where('account', '=', Input::get('account_name'))->get();
+            foreach ($results as $result) {
+                echo $result->amount . '<br>';
+                echo $result->dr . '<br>';
+                echo $result->cr . '<br>';
+                echo $result->bal . '<br>';
+                echo $result->date . '<br>';
+            }
+        }
     }
 
 }

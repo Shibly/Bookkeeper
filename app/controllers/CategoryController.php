@@ -1,7 +1,26 @@
 <?php
 
-class CategoryController extends AdminController
+use Illuminate\Support\Facades\Input;
+use Keeper\Repositories\CategoryRepositoryInterface;
+
+class CategoryController extends \BaseController
 {
+
+
+    /**
+     * Category repository
+     *
+     * @var \Keeper\Repositories\CategoryRepositoryInterface
+     */
+    protected $categories;
+
+
+    public function __construct(CategoryRepositoryInterface $categories)
+    {
+        parent::__construct();
+        $this->categories = $categories;
+    }
+
 
     public function expense()
     {
@@ -46,8 +65,10 @@ class CategoryController extends AdminController
     {
         $input = array_except(Input::all(), '_method');
         $validator = Validator::make($input, Category::$rules);
+        $categoryName = Input::get('name');
         if ($validator->passes()) {
             Category::find($id)->update($input);
+            //DB::statement(" UPDATE transactions SET category = 'Web' WHERE category = 'Web Development'; ");
             return Redirect::route('expense');
         }
         return Redirect::back()->withErrors($validator);

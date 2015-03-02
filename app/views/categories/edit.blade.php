@@ -14,6 +14,10 @@
             {{ Form::label('name','Name of your account:') }}
             {{Form::text('name',Input::old('name'),array('class'=>'form-control','placeholder'=>'category name'))}}
         </div>
+        <div class="control-group">
+            {{ Form::label('type','Category Type:') }}
+            {{Form::select('type',array('income'=>'Income','expense'=>'Expense'))}}
+        </div>
         <br>
         {{ Form::submit('Update Category',array('class'=>'btn btn-success')) }}
         {{ Form::close() }}

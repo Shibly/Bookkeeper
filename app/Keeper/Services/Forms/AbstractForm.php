@@ -28,9 +28,9 @@ class AbstractForm
     }
 
     /**
-     * Get the prepared input data
+     * Return whether the input data in valid
      *
-     * @return array
+     * @return bool
      */
     public function getInputData()
     {
@@ -45,6 +45,8 @@ class AbstractForm
             $this->getPreparedRules(),
             $this->getMessages()
         );
+
+        return $this->validator->passes();
     }
 
 
@@ -70,6 +72,18 @@ class AbstractForm
     protected function getMessages()
     {
         return $this->messages;
+    }
+
+
+    /**
+     * Get the validation errors off of the Validator instance
+     *
+     * @return mixed
+     */
+
+    public function getErrors()
+    {
+        return $this->validator->errors();
     }
 
 

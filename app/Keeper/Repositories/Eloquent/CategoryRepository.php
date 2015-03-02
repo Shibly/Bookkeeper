@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Keeper\Repositories\CategoryRepositoryInterface;
 use Keeper\Exception\CategoryNotFoundException;
+use Keeper\Services\Forms\CategoryForm;
 
 
 class CategoryRepository extends AbstractRepository implements CategoryRepositoryInterface
@@ -31,6 +32,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     public function listAll()
     {
         $categories = $this->model->lists('name', 'id');
+        return $categories;
     }
 
     /**
@@ -63,6 +65,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      */
     public function create(array $data)
     {
+
         $category = $this->getNew();
         $category->name = $data['name'];
         $category->type = $data['type'];
@@ -103,5 +106,40 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     public function helloWorld()
     {
         echo "Hi, you have called me from the repository class and it's AWESOME !";
+    }
+
+
+    /**
+     * Return all the expenses
+     *
+     * @param string $type
+     * @return mixed
+     */
+    public function findAllExpenses($type = 'Expense')
+    {
+        return $this->model->where('type', '=', $type)->get();
+
+    }
+
+    /**
+     * Return all the incomes
+     *
+     * @param string $type
+     * @return mixed
+     */
+    public function findAllIncomes($type = 'Income')
+    {
+        return $this->model->where('type', '=', $type)->get();
+    }
+
+
+    /**
+     * Get the category create/update form service
+     *
+     * @return \Keeper\Services\Forms\CategoryForm
+     */
+    public function getForm()
+    {
+        return new CategoryForm;
     }
 }

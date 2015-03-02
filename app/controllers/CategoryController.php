@@ -24,61 +24,79 @@ class CategoryController extends \BaseController
 
     public function expense()
     {
-        $expenses = Category::where('type', '=', 'Expense')->get();
+        $expenses = $this->categories->findAllExpenses();
         return View::make('categories.expense')->with('expenses', $expenses);
     }
 
 
     public function income()
     {
-        $incomes = Category::where('type', '=', 'Income')->get();
+        $incomes = $this->categories->findAllIncomes();
         return View::make('categories.income')->with('incomes', $incomes);
     }
 
 
+    /**
+     * Handle the category creation
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function postCategory()
     {
-        $input = Input::all();
-        $validator = Validator::make($input, Category::$rules);
-        if ($validator->passes()) {
-            $category = new Category();
-            $category->name = Input::get('name');
-            $category->type = Input::get('type');
-            $category->save();
-            return Redirect::route('expense');
+
+        $form = $this->categories->getForm();
+        if (!$form->isValid()) {
+            return $this->redirectRoute('expense')->withErrors($form->getErrors())->withInput();
         }
-        return Redirect::back()->withErrors($validator);
+        $this->categories->create($form->getInputData());
+
+        return $this->redirectRoute('expense');
     }
 
+
+    /**
+     * Show the category edit form
+     *
+     * @param $id
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
 
     public function editCategory($id)
     {
-        $category = Category::find($id);
-        if (is_null($category)) {
-            return Redirect::route('expense');
-        }
+        $category = $this->categories->findById($id);
         return View::make('categories.edit')->with('category', $category);
     }
+
+    /**
+     * Handle the editing of the category
+     *
+     *
+     * @param $id
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
 
 
     public function updateCategory($id)
     {
-        $input = array_except(Input::all(), '_method');
-        $validator = Validator::make($input, Category::$rules);
-        $categoryName = Input::get('name');
-        if ($validator->passes()) {
-            Category::find($id)->update($input);
-            //DB::statement(" UPDATE transactions SET category = 'Web' WHERE category = 'Web Development'; ");
-            return Redirect::route('expense');
+        $form = $this->categories->getForm();
+        if (!$form->isValid()) {
+            return $this->redirectRoute('expense')->withErrors($form->getErrors())->withInput();
         }
-        return Redirect::back()->withErrors($validator);
+        $this->categories->update($id, $form->getInputData());
+        return $this->redirectRoute('expense');
     }
 
 
+    /**
+     * Delete a category from the database
+     *
+     * @param mixed $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function deleteCategory($id)
     {
-        Category::find($id)->delete();
-        return Redirect::route('expense');
+        $this->categories->delete($id);
+        return $this->redirectRoute('expense');
     }
 
 

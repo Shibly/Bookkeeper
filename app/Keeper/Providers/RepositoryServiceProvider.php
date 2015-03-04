@@ -18,5 +18,11 @@ class RepositoryServiceProvider extends ServiceProvider
             'Keeper\Repositories\CategoryRepositoryInterface',
             'Keeper\Repositories\Eloquent\CategoryRepository'
         );
+
+
+        $this->app->bind(
+            'Keeper\Repositories\PayeeRepositoryInterface',
+            'Keeper\Repositories\Eloquent\PayeeRepository'
+        );
     }
 }

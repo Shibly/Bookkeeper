@@ -15,6 +15,9 @@ class CategoryController extends \BaseController
     protected $categories;
 
 
+    /**
+     * @param CategoryRepositoryInterface $categories
+     */
     public function __construct(CategoryRepositoryInterface $categories)
     {
         parent::__construct();

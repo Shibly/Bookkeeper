@@ -103,11 +103,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         $category->delete();
     }
 
-    public function helloWorld()
-    {
-        echo "Hi, you have called me from the repository class and it's AWESOME !";
-    }
-
 
     /**
      * Return all the expenses

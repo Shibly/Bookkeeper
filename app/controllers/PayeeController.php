@@ -1,7 +1,26 @@
 <?php
+use Illuminate\Support\Facades\Input;
+use Keeper\Repositories\PayeeRepositoryInterface;
 
 class PayeeController extends \BaseController
 {
+
+    /**
+     * Payee Repository
+     * @var /Keeper/Repositories/PayeeRepositoryInterface
+     */
+
+    protected $payees;
+
+    /**
+     * @param PayeeRepositoryInterface $payees
+     */
+
+    public function __construct(PayeeRepositoryInterface $payees)
+    {
+        $this->payees = $payees;
+    }
+
 
     /**
      * Display a listing of the resource.
@@ -15,16 +34,6 @@ class PayeeController extends \BaseController
         return View::make('payees.index')->with('payees', $payees);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * GET /payee/create
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -34,29 +43,16 @@ class PayeeController extends \BaseController
      */
     public function store()
     {
-        $input = Input::all();
-        $validator = Validator::make($input, Payee::$rules);
-        if ($validator->passes()) {
-            $payee = new Payee();
-            $payee->name = Input::get('name');
-            $payee->save();
 
-            return Redirect::route('payees.index');
+        $form = $this->payees->getForm();
+        if (!$form->isValid()) {
+            return $this->redirectRoute('payees.index')->withErrors($form->getErrors())->withInput();
         }
-        return Redirect::back()->withErrors($validator);
+        $this->payees->create($form->getInputData());
+        return $this->redirectRoute('payees.index');
+
     }
 
-    /**
-     * Display the specified resource.
-     * GET /payee/{id}
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -67,10 +63,7 @@ class PayeeController extends \BaseController
      */
     public function edit($id)
     {
-        $payee = Payee::find($id);
-        if (is_null($payee)) {
-            return Redirect::route('payees.index');
-        }
+        $payee = $this->payees->findById($id);
         return View::make('payees.edit')->with('payee', $payee);
     }
 
@@ -79,18 +72,16 @@ class PayeeController extends \BaseController
      * PUT /payee/{id}
      *
      * @param  int $id
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update($id)
     {
-        $input = array_except(Input::all(), '_method');
-        //dd($input);
-        $validator = Validator::make($input, Payee::$rules);
-        if ($validator->passes()) {
-            Payee::find($id)->update($input);
-            return Redirect::route('payees.index');
+        $form = $this->payees->getForm();
+        if (!$form->isValid()) {
+            return $this->redirectRoute('payees.index')->withErrors($form->getErrors())->withInput();
         }
-        return Redirect::back()->withErrors($validator);
+        $this->payees->update($id, $form->getInputData());
+        return $this->redirectRoute('payees.index');
     }
 
     /**
@@ -98,12 +89,12 @@ class PayeeController extends \BaseController
      * DELETE /payee/{id}
      *
      * @param  int $id
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
-        Payee::find($id)->delete();
-        return Redirect::route('payees.index');
+        $this->payees->delete($id);
+        return $this->redirectRoute('payees.index');
     }
 
 }

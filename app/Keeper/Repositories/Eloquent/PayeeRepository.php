@@ -32,8 +32,8 @@ class PayeeRepository extends AbstractRepository implements PayeeRepositoryInter
      */
     public function listAll()
     {
-        $payees = $this->model->lists('name', 'id');
-        return $payees;
+        return $this->model->lists('name', 'id');
+
     }
 
     /**
@@ -51,7 +51,7 @@ class PayeeRepository extends AbstractRepository implements PayeeRepositoryInter
     }
 
     /**
-     * Find a category by id
+     * Find a payee by id
      * @param $id
      * @return mixed
      */
@@ -61,7 +61,7 @@ class PayeeRepository extends AbstractRepository implements PayeeRepositoryInter
     }
 
     /**
-     * Create a new category in the database
+     * Create a new payee in the database
      * @param array $data
      * @return mixed
      */
@@ -74,7 +74,7 @@ class PayeeRepository extends AbstractRepository implements PayeeRepositoryInter
     }
 
     /**
-     * Update the specific category in the database
+     * Update the specific payee in the database
      *
      * @param $id
      * @param array $data
@@ -89,7 +89,7 @@ class PayeeRepository extends AbstractRepository implements PayeeRepositoryInter
     }
 
     /**
-     * Delete the specific category from the database.
+     * Delete the specific payee from the database.
      *
      * @param $id
      * @return mixed
@@ -102,7 +102,7 @@ class PayeeRepository extends AbstractRepository implements PayeeRepositoryInter
 
 
     /**
-     * Get the category create/update form service
+     * Get the payee create/update form service
      *
      * @return \Keeper\Services\Forms\PayeeForm
      */

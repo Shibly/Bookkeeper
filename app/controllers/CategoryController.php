@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Input;
+
 use Keeper\Repositories\CategoryRepositoryInterface;
 
 class CategoryController extends \BaseController
 {
-
 
     /**
      * Category repository

@@ -1,7 +1,22 @@
 <?php
 
+use Keeper\Repositories\PayerRepositoryInterface;
+
 class PayerController extends \BaseController
 {
+
+
+    /**
+     * Payer Repository
+     * @var /Keeper/Repositories/PayerRepositoryInterface
+     */
+    protected $payers;
+
+
+    public function __construct(PayerRepositoryInterface $payers)
+    {
+        $this->payers = $payers;
+    }
 
     /**
      * Display a listing of the resource.
@@ -11,20 +26,10 @@ class PayerController extends \BaseController
      */
     public function index()
     {
-        $payers = Payer::all();
+        $payers = $this->payers->findAll();
         return View::make('payers.index')->with('payers', $payers);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * GET /payer/create
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -34,28 +39,12 @@ class PayerController extends \BaseController
      */
     public function store()
     {
-        $input = Input::all();
-        $validator = Validator::make($input, Payer::$rules);
-        if ($validator->passes()) {
-            $payer = new Payer();
-            $payer->name = Input::get('name');
-            $payer->save();
-
-            return Redirect::route('payers.index');
+        $form = $this->payers->getForm();
+        if (!$form->isValid()) {
+            return $this->redirectRoute('payers.index')->withErrors($form->getErrors())->withInput();
         }
-        return Redirect::back()->withErrors($validator);
-    }
-
-    /**
-     * Display the specified resource.
-     * GET /payer/{id}
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
+        $this->payers->create($form->getInputData());
+        return $this->redirectRoute('payers.index');
     }
 
     /**
@@ -67,10 +56,7 @@ class PayerController extends \BaseController
      */
     public function edit($id)
     {
-        $payer = Payer::find($id);
-        if (is_null($payer)) {
-            return Redirect::route('payers.index');
-        }
+        $payer = $this->payers->findById($id);
         return View::make('payers.edit')->with('payer', $payer);
     }
 
@@ -83,14 +69,12 @@ class PayerController extends \BaseController
      */
     public function update($id)
     {
-        $input = array_except(Input::all(), '_method');
-        //dd($input);
-        $validator = Validator::make($input, Payer::$rules);
-        if ($validator->passes()) {
-            Payer::find($id)->update($input);
-            return Redirect::route('payers.index');
+        $form = $this->payers->getForm();
+        if (!$form->isValid()) {
+            return $this->redirectRoute('payers.index')->withErrors($form->getErrors())->withInput();
         }
-        return Redirect::back()->withErrors($validator);
+        $this->payers->update($id, $form->getInputData());
+        return $this->redirectRoute('payers.index');
     }
 
     /**
@@ -102,8 +86,8 @@ class PayerController extends \BaseController
      */
     public function destroy($id)
     {
-        Payer::find($id)->delete();
-        return Redirect::route('payers.index');
+        $this->payers->delete($id);
+        return $this->redirectRoute('payers.index');
     }
 
 }

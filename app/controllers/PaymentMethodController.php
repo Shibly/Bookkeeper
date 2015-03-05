@@ -1,108 +1,97 @@
 <?php
 
-class PaymentMethodController extends AdminController
+use Keeper\Repositories\PaymentRepositoryInterface;
+
+class PaymentMethodController extends \BaseController
 {
 
     /**
+     * Category repository
+     *
+     * @var \Keeper\Repositories\CategoryRepositoryInterface
+     */
+
+
+    protected $payments;
+
+    /**
+     * @param PaymentRepositoryInterface $payments
+     */
+    public function __construct(PaymentRepositoryInterface $payments)
+    {
+        $this->payments = $payments;
+    }
+
+    /**
      * Display a listing of the resource.
-     * GET /paymentmethod
+     * GET /PaymentMethods
      *
      * @return Response
      */
     public function index()
     {
-        $methods = Pmethod::all();
+        $methods = $this->payments->findAll();
         return View::make('methods.index')->with('methods', $methods);
     }
 
     /**
-     * Show the form for creating a new resource.
-     * GET /paymentmethod/create
-     *
-     * @return Response
-     */
-    public function create()
-    {
-
-    }
-
-    /**
      * Store a newly created resource in storage.
-     * POST /paymentmethod
+     * POST /PaymentMethod
      *
      * @return Response
      */
     public function store()
     {
-        $input = Input::all();
-        $validator = Validator::make($input, Pmethod::$rules);
-        if ($validator->passes()) {
-            $method = new Pmethod();
-            $method->name = Input::get('name');
-            $method->save();
-
-            return Redirect::route('methods.index');
+        $form = $this->payments->getForm();
+        if (!$form->isValid()) {
+            return $this->redirectRoute('methods.index')->withErrors($form->GetErrors())->withInput();
         }
-        return Redirect::back()->withErrors($validator);
+        $this->payments->create($form->getInputData());
+        return $this->redirectRoute('methods.index');
+
     }
 
-    /**
-     * Display the specified resource.
-     * GET /paymentmethod/{id}
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
-     * GET /paymentmethod/{id}/edit
+     * GET /PaymentMethod/{id}/edit
      *
      * @param  int $id
      * @return Response
      */
     public function edit($id)
     {
-        $method = Pmethod::find($id);
-        if (is_null($method)) {
-            return Redirect::route('methods.index');
-        }
+        $method = $this->payments->findById($id);
         return View::make('methods.edit')->with('method', $method);
     }
 
     /**
      * Update the specified resource in storage.
-     * PUT /paymentmethod/{id}
+     * PUT /PaymentMethod/{id}
      *
      * @param  int $id
      * @return Response
      */
     public function update($id)
     {
-        $input = array_except(Input::all(), '_method');
-        //dd($input);
-        $validator = Validator::make($input, Pmethod::$rules);
-        if ($validator->passes()) {
-            Pmethod::find($id)->update($input);
-            return Redirect::route('methods.index');
+        $form = $this->payments->getForm();
+        if (!$form->isValid()) {
+            return $this->redirectRoute('methods.index')->withErrors($form->GetErrors())->withInput();
         }
-        return Redirect::back()->withErrors($validator);
+        $this->payments->update($id, $form->getInputData());
+        return $this->redirectRoute('methods.index');
     }
 
     /**
      * Remove the specified resource from storage.
-     * DELETE /paymentmethod/{id}
+     * DELETE /PaymentMethod/{id}
      *
      * @param  int $id
      * @return Response
      */
     public function destroy($id)
     {
-        Pmethod::find($id)->delete();
+        $this->payments->delete($id);
         return Redirect::route('methods.index');
     }
 

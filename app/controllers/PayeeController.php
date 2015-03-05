@@ -1,5 +1,5 @@
 <?php
-use Illuminate\Support\Facades\Input;
+
 use Keeper\Repositories\PayeeRepositoryInterface;
 
 class PayeeController extends \BaseController
@@ -30,7 +30,7 @@ class PayeeController extends \BaseController
      */
     public function index()
     {
-        $payees = Payee::all();
+        $payees = $this->payees->findAll();
         return View::make('payees.index')->with('payees', $payees);
     }
 

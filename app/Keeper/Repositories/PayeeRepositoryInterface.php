@@ -9,7 +9,8 @@
 namespace Keeper\Repositories;
 
 
-interface PayeeRepositoryInterface extends BaseRepositoryInterface {
+interface PayeeRepositoryInterface extends BaseRepositoryInterface
+{
 
 
 }

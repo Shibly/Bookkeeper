@@ -18,5 +18,15 @@ class TransactionForm extends AbstractForm
      * @var array
      */
 
-    protected $rules = array();
+    protected $rules = array(
+        'account' => 'required',
+        'type' => 'required',
+        'category' => 'required',
+        'amount' => 'required',
+        'payer' => 'required',
+        'payee' => 'required',
+        'method' => 'required',
+        'ref' => 'required',
+        'description' => 'required'
+    );
 }

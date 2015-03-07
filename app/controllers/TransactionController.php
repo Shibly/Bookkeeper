@@ -65,33 +65,38 @@ class TransactionController extends BaseController
      */
     public function store()
     {
-        $input = Input::all();
-        //dd(Input::get('payee'));
-        $validator = Validator::make($input, Transaction::$rules);
-        if ($validator->passes()) {
-            $transaction = new Transaction();
-            $account = Account::where('account_name', '=', Input::get('account'))->first();
-            $transaction->account = Input::get('account');
-            $transaction->type = 'Income';
-            $transaction->category = Input::get('category');
-            $transaction->amount = Input::get('amount');
-            $transaction->cr = Input::get('amount');
-            $transaction->payee = Input::get('payee');
-            $transaction->method = Input::get('method');
-            $transaction->ref = Input::get('ref');
-            $transaction->description = Input::get('description');
-            $transaction->date = Input::get('date');
-            $transaction->bal = Input::get('amount') + $account->balance;
-            $transaction->save();
-            /**
-             * Let's update account.
-             */
+        $accountName = Input::get('account');
+        if ($accountName == 'default') {
+            return Redirect::back()->withErrors('Select an account first');
+        } else {
+            $input = Input::all();
+            //dd(Input::get('payee'));
+            $validator = Validator::make($input, Transaction::$rules);
+            if ($validator->passes()) {
+                $transaction = new Transaction();
+                $account = Account::where('account_name', '=', Input::get('account'))->first();
+                $transaction->account = Input::get('account');
+                $transaction->type = 'Income';
+                $transaction->category = Input::get('category');
+                $transaction->amount = Input::get('amount');
+                $transaction->cr = Input::get('amount');
+                $transaction->payee = Input::get('payee');
+                $transaction->method = Input::get('method');
+                $transaction->ref = Input::get('ref');
+                $transaction->description = Input::get('description');
+                $transaction->date = Input::get('date');
+                $transaction->bal = Input::get('amount') + $account->balance;
+                $transaction->save();
+                /**
+                 * Let's update account.
+                 */
 
-            //dd($account->account_name);
-            $account->balance += Input::get('amount');
-            //dd($account);
-            $account->save();
-            return Redirect::route('transactions.index');
+                //dd($account->account_name);
+                $account->balance += Input::get('amount');
+                //dd($account);
+                $account->save();
+                return Redirect::route('transactions.index');
+            }
         }
         return Redirect::back()->withErrors($validator);
     }

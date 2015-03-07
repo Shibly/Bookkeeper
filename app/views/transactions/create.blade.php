@@ -22,7 +22,7 @@
 
                 <div class="control-group">
                     {{ Form::label('account','Account:') }}
-                    {{Form::select('account',array('default' => 'Please Select') + $accounts, 'default')}}
+                    {{Form::select('account',array('default' => 'Please Select','class'=>'select-income') + $accounts, 'default')}}
                 </div>
                 <br/>
 

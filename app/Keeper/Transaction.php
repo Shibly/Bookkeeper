@@ -11,7 +11,7 @@ namespace Keeper;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Transactions extends Model
+class Transaction extends Model
 {
 
     protected $table = 'transactions';

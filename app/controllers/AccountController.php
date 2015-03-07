@@ -1,7 +1,19 @@
 <?php
 
-class AccountController extends AdminController
+
+use Keeper\Repositories\AccountRepositoryInterface;
+
+class AccountController extends \BaseController
 {
+
+    protected $account;
+
+    public function __construct(AccountRepositoryInterface $account)
+    {
+        parent::__construct();
+        $this->account = $account;
+
+    }
 
     /**
      * Display a listing of the resource.
@@ -34,51 +46,14 @@ class AccountController extends AdminController
      */
     public function store()
     {
-        $input = Input::all();
-        $validator = Validator::make($input, Account::$rules);
-        if ($validator->passes()) {
-
-            /**
-             * Save data to the account table
-             */
-            $account = new Account();
-            $account->account_name = Input::get('account_name');
-            $account->description = Input::get('description');
-            $account->balance = Input::get('balance');
-            $account->save();
-
-            /**
-             * Save data to the transaction table
-             */
-
-            $transaction = new Transaction();
-            $transaction->type = 'Transfer';
-            $transaction->account = Input::get('account_name');
-            $transaction->amount = Input::get('balance');
-            $transaction->payer = 'System';
-            $transaction->date = date("Y/m/d");
-            $transaction->description = Input::get('description');
-            $transaction->cr = Input::get('balance');
-            $transaction->bal = Input::get('balance');
-            $transaction->save();
-
-
-            return Redirect::route('transactions.index');
+        $form = $this->account->getForm();
+        if (!$form->isValid()) {
+            return $this->redirectRoute('transactions.index')->withErrors($form->getErrors())->withInput();
         }
-        return Redirect::back()->withErrors($validator);
+        $this->account->create($form->getInputData());
+        return $this->redirectRoute('transactions.index');
     }
 
-    /**
-     * Display the specified resource.
-     * GET /account/{id}
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -89,10 +64,7 @@ class AccountController extends AdminController
      */
     public function edit($id)
     {
-        $account = Account::find($id);
-        if (is_null($account)) {
-            return Redirect::route('accounts.index');
-        }
+        $account = $this->account->findById($id);
         return View::make('accounts.edit')->with('account', $account);
     }
 
@@ -105,14 +77,12 @@ class AccountController extends AdminController
      */
     public function update($id)
     {
-        $input = array_except(Input::all(), '_method');
-        //dd($input);
-        $validator = Validator::make($input, Account::$rules);
-        if ($validator->passes()) {
-            Account::find($id)->update($input);
-            return Redirect::route('accounts.index');
+        $form = $this->account->getForm();
+        if (!$form->isValid()) {
+            return $this->redirectRoute('transactions.index')->withErrors($form->getErrors())->withInput();
         }
-        return Redirect::back()->withErrors($validator);
+        $this->account->update($id, $form->getInputData());
+        return $this->redirectRoute('transactions.index');
     }
 
     /**
@@ -124,8 +94,8 @@ class AccountController extends AdminController
      */
     public function destroy($id)
     {
-        Account::find($id)->delete();
-        return Redirect::route('accounts.index');
+        $this->account->delete($id);
+        return $this->redirectRoute('accounts.index');
     }
 
 
@@ -135,9 +105,9 @@ class AccountController extends AdminController
 
     public function balance()
     {
-        $balance = Account::all();
-
-        return View::make('accounts.balance')->with('balance', $balance)->with('sum', Account::getSum());
+        $balance = $this->account->findAll();
+        $sum = $this->account->getTotalAccountBalance();
+        return View::make('accounts.balance')->with('balance', $balance)->with('sum', $sum);
     }
 
 }

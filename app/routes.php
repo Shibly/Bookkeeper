@@ -35,7 +35,7 @@ Route::group(array('before' => 'auth'), function () {
     Route::post('updateUser/{id}', 'AuthController@updateUser')->where('id', '[1-9][0-1]*');
     Route::get('admin', 'AdminController@index');
     Route::get('logout', 'AuthController@logout');
-    Route::resource('posts', 'PostController');
+
     Route::get('expenses', array('as' => 'expenses', 'uses' => 'ExpenseController@createExpenses'));
     Route::post('storeExpense', array('as' => 'storeExpense', 'uses' => 'ExpenseController@storeExpense'));
     Route::get('balance', array('as' => 'balance', 'uses' => 'AccountController@balance'));
